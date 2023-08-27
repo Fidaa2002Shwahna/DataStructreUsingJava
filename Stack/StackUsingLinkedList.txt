@@ -1,0 +1,80 @@
+package stacklinkedlist;
+
+public class StackLinkedList<T> {
+
+    private int length;
+    private Node top;
+
+    //Node
+    public class Node {
+
+        Node next;
+        T value;
+
+        public Node(T data) {
+            this.value = data;
+        }
+
+    }
+
+//stack contructor   
+    public StackLinkedList() {
+        top = null;
+        length = 0;
+    }
+
+    //length
+    public int length() {
+        return length;
+    }
+
+    public boolean isEmpty() {
+
+        return length == 0;
+    }
+
+    public void push(T data) {
+        Node temp = new Node(data);
+        temp.next = top;
+        top = temp;
+        length++;
+
+    }
+
+    public T pop() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack is full!");
+        }
+        T result = top.value;
+        top = top.next;
+        length--;
+        return result;
+    }
+
+    public T getTop() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack is full!");
+        }
+        return top.value;
+    }
+    
+    public void print(){
+        Node curr=top;
+        while (curr!=null) {  
+            System.out.println(curr.value);
+            curr=curr.next;
+            
+        }
+    }
+
+    public static void main(String[] args) {
+        StackLinkedList<Integer> s = new StackLinkedList<>();
+        s.push(100);
+        s.push(200);
+        s.push(300);
+        s.push(400);
+//        s.pop();
+        s.print();
+    }
+
+}

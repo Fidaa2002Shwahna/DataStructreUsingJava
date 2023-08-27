@@ -1,0 +1,79 @@
+package stackarray;
+
+public class Stack<T> {
+
+    int top;
+    T arr[];
+
+    public Stack(int capacity) {
+        top = -1;
+        arr = (T[]) new Object[capacity];
+
+    }
+
+    public Stack() {
+        this(10);
+    }
+
+    public void push(T item) {
+        if (isFull()) {
+            throw new RuntimeException("stack is fill !");
+        } else {
+            arr[++top] = item;
+        }
+    }
+
+    public boolean isFull() {
+        return arr.length == (top + 1);
+    }
+
+    public T pop() {
+        if (isEmpty()) {
+            throw new RuntimeException("stack is Empty!");
+        }
+
+        T result = arr[top];
+        top--;
+        return result;
+    }
+
+    public boolean isEmpty() {
+        return top < 0;
+    }
+
+    public T getTop() {
+        if (isEmpty()) {
+            throw new RuntimeException("stack is Empty!");
+        }
+
+        return arr[top];
+    }
+
+    public void print() {
+        for (int i = top; i >= 0; i--) {
+            System.out.println(arr[i]);
+        }
+    }
+}
+
+//=========================================================
+
+package stackarray;
+
+public class StackArray {
+
+    public static void main(String[] args) {
+        Stack<String> s = new Stack<>();
+        s.push("Fidaa");
+        s.push("Ahmad");
+        s.push("Rasheed");
+        s.push("Shwahna");
+        System.out.println(s.getTop());
+        s.pop();
+         System.out.println(s.getTop());
+         s.print();
+
+        
+    }
+
+}

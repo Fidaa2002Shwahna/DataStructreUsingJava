@@ -1,0 +1,39 @@
+package isbalanced;
+
+import java.util.Stack;
+
+public class IsBalanced {
+
+    public static boolean arePair(char start, char end) {
+        return (start == '(' && end == ')') || (start == '{' && end == '}') || (start == '[' && end == ']');
+    }
+
+       public static  boolean isBalanced(String str) {
+        Stack<Character> s = new Stack<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+
+            if (c == '{' || c == '[' || c == '(') {
+                s.push(c);
+            } else if (s.empty() || !arePair(s.peek(), c)) {
+                return false;
+            } else {
+                s.pop(); // Move this line outside the else block
+            }
+        }
+
+        return s.empty();
+    }
+
+    public static void main(String[] args) {
+      String expr = "([{}])";
+ 
+        // Function call
+        if (isBalanced(expr))
+            System.out.println("Balanced ");
+        else
+            System.out.println("Not Balanced ");
+    }
+
+}
