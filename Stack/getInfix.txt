@@ -1,0 +1,36 @@
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class getInfix {
+
+    public static String getInfix(String str) {
+        Deque<String> stack = new ArrayDeque<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+
+            if (Character.isLetterOrDigit(c)) {
+                stack.push(String.valueOf(c));
+            } else {
+                String temp = "(";
+                String str1 = stack.pop();
+                String str2 = stack.pop();
+                temp+=(str2+String.valueOf(c)+str1);
+                temp+=")";
+
+                stack.push(temp);
+
+            }
+
+        }
+
+        return stack.peek();
+
+    }
+
+    public static void main(String[] args) {
+        String exp = "ab*c+";
+    System.out.println( getInfix(exp));
+    }
+}
