@@ -1,9 +1,11 @@
-import java.util.Stack;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class PostfixToPrefixConverter {
 
     public static String postfixToPrefix(String str) {
-        Stack<String> stack = new Stack<String>();
+        Deque<String> stack = new ArrayDeque<>();
 
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
@@ -11,14 +13,21 @@ public class PostfixToPrefixConverter {
             if (Character.isLetterOrDigit(c)) {
                 stack.push(String.valueOf(c));
             } else {
-                String operand2 = stack.pop();
-                String operand1 = stack.pop();
-                String temp = c + operand1 + operand2;
+                String temp = "";
+                temp += String.valueOf(c);
+
+                String str1 = stack.pop();
+                String str2 = stack.pop();
+                temp+=(str2+str1);
+
                 stack.push(temp);
+
             }
+
         }
-        
+
         return stack.peek();
+
     }
 
     public static void main(String[] args) {
