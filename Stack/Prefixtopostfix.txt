@@ -1,0 +1,36 @@
+package prefixtopostfix;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class Prefixtopostfix {
+
+    public static String Prefixtopostfix(String str) {
+        Deque<String> stack = new ArrayDeque<String>();
+
+        for (int i = str.length() - 1; i >= 0; i--) {
+            char c = str.charAt(i);
+
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || c == '^') {
+                String temp="";
+                 temp+=stack.peek();
+                stack.pop();
+                temp += stack.peek();
+                stack.pop();
+                temp += String.valueOf(c);
+                stack.push(temp);
+            } else {
+                stack.push(String.valueOf(c));
+            }
+
+        }
+        return stack.peek();
+    }
+
+    public static void main(String[] args) {
+ String pre_exp = "*-A/BC-/AKL";
+        System.out.println("Postfix : "
+                           + Prefixtopostfix(pre_exp));
+    }
+
+}
