@@ -1,0 +1,99 @@
+package infixtoprefix;
+
+import com.sun.javafx.binding.StringFormatter;
+import java.util.Stack;
+
+public class InfixToPrefix {
+
+    static boolean isOparetor(char c) {
+        return (!Character.isDigit(c) && !Character.isLetter(c));
+    }
+
+    static int proce(char c) {
+        if (c == '+' || c == '-') {
+            return 1;
+        } else if (c == '/' || c == '*') {
+            return 2;
+        } else if (c == '^') {
+            return 3;
+        }
+        return 0;
+    }
+
+    static String infixToPostfix(String str) {
+        String res = "";
+        Stack<Character> s = new Stack<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+
+            if (Character.isDigit(c) || Character.isLetter(c)) {
+                res += String.valueOf(c);
+            } else if (c == '(') {
+                s.push(c);
+            } else if (c == ')') {
+                while (s.peek() != '(') {
+                    res += String.valueOf(s.peek());
+                    s.pop();
+                }
+                s.pop();
+
+            } else {
+                if (isOparetor(c)) {
+                    if (c == '^') {
+                        while (!s.isEmpty() &&proce(c) <= proce(s.peek())) {
+                            res += String.valueOf(s.peek());
+                            s.pop();
+                        }
+                        s.push(c);
+
+                    } else {
+                        while (!s.isEmpty() &&proce(c) < proce(s.peek())) {
+                            res += String.valueOf(s.peek());
+                            s.pop();
+                        }
+                        s.push(c);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        while (!s.isEmpty()) {
+            res += s.peek();
+            s.pop();
+        }
+
+        return res;
+    }
+
+    public static String InfixToPrefix(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        sb.reverse().toString();
+
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '(') {
+                sb.setCharAt(i, ')');
+            } else if (sb.charAt(i) == ')') {
+                sb.setCharAt(i, '(');
+            }
+
+        }
+        String res = infixToPostfix(sb.toString());
+
+        StringBuilder sb2 = new StringBuilder(res);
+        return sb2.reverse().toString();
+    }
+
+    public static void main(String[] args) {
+        String s = ("x+y*z/w+u");
+
+        // Function call
+        System.out.println(InfixToPrefix(s));
+
+    }
+
+}
