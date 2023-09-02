@@ -1,0 +1,117 @@
+package queue;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+import java.util.NoSuchElementException;
+
+public class Queue<T> {
+
+    Node front;
+    Node rear;
+    int length;
+
+    public class Node {
+
+        Node next;
+        T data;
+
+        public Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
+
+    }
+//=============
+
+    public int length() {
+        return length;
+    }
+//==============
+
+    public boolean isEmpty() {
+        return length == 0;
+    }
+//==============
+
+    public void enqueue(T data) {
+
+        Node temp = new Node(data);
+
+        if (isEmpty()) {
+            front = temp;
+        } else {
+            rear.next = temp;
+
+        }
+
+        rear = temp;
+        length++;
+    }
+
+    //===============
+    public T dequeue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is already empty!");
+        }
+
+        T resut = front.data;
+        front = front.next;
+        if (front == null) {
+            rear = null;
+        }
+        length--;
+        return resut;
+
+    }
+
+    //=================
+    public void print() {
+        if (isEmpty()) {
+            return;
+        } else {
+            Node current = front;
+            while (current != null) {
+                System.out.println(current.data);
+                current = current.next;
+            }
+
+        }
+
+     
+
+    }
+
+    //====================
+    public T First() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is already empty!");
+        }
+
+        T result = front.data;
+        return result;
+
+    }
+
+    //====================
+    public T Last() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue is already empty!");
+        }
+
+        T result = rear.data;
+        return result;
+
+    }
+
+    //=================
+    public static void main(String[] args) {
+        Queue<Integer> q = new Queue<>();
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        q.enqueue(4);
+        System.out.println(q.length());
+        System.out.println(q.Last());
+
+    }
+
+}
