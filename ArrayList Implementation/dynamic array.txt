@@ -1,0 +1,143 @@
+package javaapplication26;
+
+import java.util.Arrays;
+
+public class DynamicArray<T> {
+
+    private T arr[];
+    private int len = 0;
+    private int capacity = 0;
+
+    public DynamicArray() {
+        this.capacity = 16;
+        arr = (T[]) new Object[capacity];
+    }
+
+    public DynamicArray(int capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
+        }
+
+        this.capacity = capacity;
+        arr = (T[]) new Object[capacity];
+    }
+
+    public int size() {
+        return this.len;
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    public T get(int index) {
+        if (index < 0 || index >= len) {
+            throw new ArrayIndexOutOfBoundsException("Index Out Of Bounds: " + index);
+        }
+
+        return arr[index];
+    }
+
+    public void set(int index, T elem) {
+        if (index < 0 || index >= len) {
+            throw new ArrayIndexOutOfBoundsException("Index Out Of Bounds: " + index);
+        }
+
+        arr[index] = elem;
+    }
+
+    public void clear() {
+        Arrays.fill(arr, null); // Using Arrays.fill to clear the array
+        len = 0;
+    }
+
+    public void add(T elem) {
+        if (len >= capacity) {
+            if (capacity == 0) {
+                capacity = 1;
+            } else {
+                capacity *= 2;
+            }
+
+            T[] new_arr = (T[]) new Object[capacity];
+            System.arraycopy(arr, 0, new_arr, 0, len); // Using System.arraycopy to copy the elements
+            arr = new_arr;
+        }
+
+        arr[len++] = elem;
+    }
+
+    public T removeAt(int index) {
+        if (index < 0 || index >= len) {
+            throw new ArrayIndexOutOfBoundsException("Index Out Of Bounds: " + index);
+        }
+
+        T data = arr[index];
+
+        T[] new_arr = (T[]) new Object[len - 1];
+        System.arraycopy(arr, 0, new_arr, 0, index);
+        System.arraycopy(arr, index + 1, new_arr, index, len - index - 1);
+        arr = new_arr;
+        len--;
+        return data;
+    }
+
+    public boolean remove(Object val) {
+        for (int i = 0; i < len; i++) {
+            if (arr[i].equals(val)) {
+                removeAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int indexOf(Object val) {
+        for (int i = 0; i < len; i++) {
+            if (arr[i].equals(val)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean contains(Object val) {
+        return indexOf(val) != -1;
+    }
+
+    @Override
+    public String toString() {
+        if (len == 0) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder(len * 10);
+        sb.append("[");
+        for (int i = 0; i < len - 1; i++) {
+            sb.append(arr[i]).append(", ");
+        }
+        sb.append(arr[len - 1]).append("]");
+        return sb.toString();
+    }
+}
+
+
+
+
+
+
+package javaapplication26;
+
+public class JavaApplication26 {
+
+    public static void main(String[] args) {
+      DynamicArray<Integer> arr =new DynamicArray<Integer>();
+      arr.add(22);
+       arr.add(221);
+        arr.add(54);
+        System.out.println(arr.removeAt(2));
+          System.out.println(arr.size());
+        
+    }
+    
+}
