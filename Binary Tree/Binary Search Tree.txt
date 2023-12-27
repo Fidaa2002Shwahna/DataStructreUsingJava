@@ -1,0 +1,81 @@
+package binary.search.tree;
+
+public class BinarySearchTree<T extends Comparable<T>> {
+
+    private NodeTree root;
+
+    public class NodeTree {
+
+        private T data;
+        private NodeTree left;
+        private NodeTree right;
+
+        public NodeTree(T val) {
+            this.data = val;
+        }
+    }
+
+    public void insert(T val) {
+        root = insert(root, val);
+    }
+
+    private NodeTree insert(NodeTree root, T val) {
+        if (root == null) {
+            return new NodeTree(val);
+        }
+
+        if (val.compareTo(root.data) < 0) {
+            root.left = insert(root.left, val);
+        } else {
+            root.right = insert(root.right, val);
+        }
+
+        return root;
+    }
+
+    public void InOrder() {
+        inorder(root);
+    }
+
+    private void inorder(NodeTree root) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left);
+        System.out.print(root.data + " ");
+        inorder(root.right);
+    }
+
+    public NodeTree Search(T key) {
+        return search(root, key);
+    }
+
+    private NodeTree search(NodeTree root, T key) {
+        if (root == null || root.data.equals(key)) {
+            return root;
+        }
+        if (key.compareTo(root.data) < 0) {
+            return search(root.left, key);
+        } else {
+            return search(root.right, key);
+        }
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree<Integer> bt = new BinarySearchTree<>();
+        bt.insert(1);
+        bt.insert(2);
+        bt.insert(3);
+        bt.insert(4);
+
+        bt.InOrder();
+        
+        System.out.println();
+
+        if (bt.Search(33) != null) {
+            System.out.println("value found !");
+        } else {
+            System.out.println("value not found !");
+        }
+    }
+}

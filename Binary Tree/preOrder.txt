@@ -1,0 +1,19 @@
+    public void preOrder() {
+        if (root == null) {
+            return;
+        }
+
+        Stack<TreeNode> stacks = new Stack<>();
+        stacks.push(root);
+        while (!stacks.empty()) {
+            TreeNode temp = stacks.pop();
+            System.out.println(temp.data);
+            if (temp.right != null) {
+                stacks.push(temp.right);
+            }
+            if (temp.left != null) {
+                stacks.push(temp.left);
+            }
+        }
+
+    }

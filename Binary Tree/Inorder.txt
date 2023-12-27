@@ -1,0 +1,20 @@
+    public void InOrder() {
+        if (root == null) {
+            return;
+        }
+
+        Stack<TreeNode> st = new Stack<TreeNode>();
+        TreeNode temp = root;
+
+        while (temp != null || !st.empty()) {
+            if (temp != null) {
+                st.push(temp);
+                temp = temp.left;
+            } else {
+                temp = st.pop();
+                System.out.println(temp.data);
+                temp = temp.right;
+            }
+        }
+
+    }

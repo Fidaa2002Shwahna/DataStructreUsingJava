@@ -1,0 +1,132 @@
+package binarytree;
+
+import java.util.Stack;
+
+public class BinaryTree<T extends Comparable<T>>{
+    
+    TreeNode root;
+    
+    public class TreeNode {
+        
+        T data;
+        TreeNode left;
+        TreeNode right;
+        
+        public TreeNode(T val) {
+            this.data = val;
+            this.left = null;
+            this.right = null;
+        }
+        
+    }
+    
+    public void creteTree(T[] values) {
+        if (values == null || values.length == 0) {
+            throw new IllegalArgumentException("Array can't be empty");
+        }
+        root = creatTreeRecursive(values, 0);
+        
+    }
+    
+    private TreeNode creatTreeRecursive(T[] val, int index) {
+        if (index < val.length) {
+            TreeNode newNode = new TreeNode(val[index]);
+            newNode.left = creatTreeRecursive(val, 2 * index + 1);
+            newNode.right = creatTreeRecursive(val, 2 * index + 2);
+            return newNode;
+        }
+        return null;
+        
+    }
+    
+    public void preOrder() {
+        if (root == null) {
+            return;
+        }
+        
+        Stack<TreeNode> stacks = new Stack<>();
+        stacks.push(root);
+        while (!stacks.empty()) {
+            TreeNode temp = stacks.pop();
+            System.out.print(temp.data+" ");
+            if (temp.right != null) {
+                stacks.push(temp.right);
+            }
+            if (temp.left != null) {
+                stacks.push(temp.left);
+            }
+        }
+        
+    }
+    
+    public void InOrder() {
+        if (root == null) {
+            return;
+        }
+        
+        Stack<TreeNode> st = new Stack<TreeNode>();
+        TreeNode temp = root;
+        
+        while (temp != null || !st.empty()) {
+            if (temp != null) {
+                st.push(temp);
+                temp = temp.left;
+            } else {
+                temp = st.pop();
+                System.out.print(temp.data+" ");
+                temp = temp.right;
+            }
+        }
+        
+    }
+    
+    public void posrtorder() {
+        Postorder(root);
+    }
+    
+    private void Postorder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        Postorder(root.left);
+        Postorder(root.right);
+        System.out.print(root.data+" ");
+    }
+    
+    
+public T findMax() {
+    return findMax(root);
+}
+
+private T findMax(TreeNode root) {
+    if (root == null) {
+        return null;
+    }
+
+    T result = root.data;
+    T left = findMax(root.left);
+    T right = findMax(root.right);
+
+    if (left != null && left.compareTo(result) > 0) {
+        result = left;
+    }
+    if (right != null && right.compareTo(result) > 0) {
+        result = right;
+    }
+
+    return result;
+}
+
+    public static void main(String[] args) {
+        BinaryTree<Integer> temp = new BinaryTree<>();
+        Integer[] values = {1, 2, 3, 4, 5};
+        temp.creteTree(values);
+        temp.preOrder();
+        System.out.println();
+        temp.InOrder();
+        System.out.println();
+        temp.posrtorder();
+        System.out.println();
+        System.out.println(temp.findMax());
+    }
+}
